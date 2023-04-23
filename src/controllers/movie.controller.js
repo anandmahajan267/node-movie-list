@@ -17,9 +17,8 @@ const getMovies = async (_req, res) => {
 const addMovie = async (req, res) => {
   try {
     const movieData = req.body
-    console.log('movieData :', movieData);
-    const { message } = await movieService.addMovie(movieData);
-
+    const { type, message } = await movieService.addMovie(movieData);
+    if (type) return res.status(errorMap.mapError(type)).json({ message });
     return res.status(201).json(message);
   } catch (err) {
     return res.status(500).json({ message: err });
