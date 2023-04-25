@@ -14,6 +14,11 @@ const getMovies = async () => {
   return JSON.parse(jsonData)
 };
 
+const getFilterMovies = async (keyword) => {
+  const movies = await getMovies()
+  return movies.filter(word => word.name.toLowerCase().indexOf(keyword.toLowerCase().trim()) > -1)
+
+}
 const getMovieById = async (id) => {
   const existMovies = await getMovies()
   return existMovies.find(movie => movie.id === id);
@@ -21,7 +26,7 @@ const getMovieById = async (id) => {
 }
 
 const addMovie = async (movieData) => {
-  const newMovieData = { id: uuidv1(), ...movieData }
+  const newMovieData = { ...movieData, id: uuidv1() }
   const existMovies = await getMovies()
   existMovies.push(newMovieData)
   saveMovieData(existMovies)
@@ -57,4 +62,5 @@ module.exports = {
   updateMovie,
   daleteMovie,
   getMovieById,
+  getFilterMovies
 };

@@ -1,8 +1,8 @@
 const validations = require('../validations/validateInputValues');
 const movie = require('../models/movie.model');
 
-const getMovies = async () => {
-  const users = await movie.getMovies();
+const getMovies = async (keyword) => {
+  const users = await movie.getFilterMovies(keyword);
   return { type: null, message: users };
 };
 

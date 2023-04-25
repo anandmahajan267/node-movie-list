@@ -4,9 +4,11 @@ const errorMap = require('../utils/errorMap');
 
 const error500message = 'Internal error';
 
-const getMovies = async (_req, res) => {
+const getMovies = async (req, res) => {
   try {
-    const { message } = await movieService.getMovies();
+    const keyword = (req.query.keyword) ? req.query.keyword : '';
+
+    const { message } = await movieService.getMovies(keyword);
 
     return res.status(200).json(message);
   } catch (err) {
@@ -54,6 +56,7 @@ const daleteMovie = async (req, res) => {
 const getMovie = async (req, res) => {
   try {
     const id = req.params.id
+
     const { type, message } = await movieService.getMovie(id);
     if (type) return res.status(errorMap.mapError(type)).json({ message });
 
